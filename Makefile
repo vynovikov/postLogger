@@ -1,0 +1,3 @@
+init:
+	go mod init postLogger
+	go get ./...
