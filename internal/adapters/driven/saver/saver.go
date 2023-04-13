@@ -30,7 +30,7 @@ func NewSaver(rootPath string, limit int64) (*SaverStruct, error) {
 
 			// Log folder not found
 
-			os.Mkdir(rootPath, 0755)
+			os.Mkdir(rootPath, 0777)
 			//logger.L.Infoln("in store.NewStore folder created")
 
 			return &SaverStruct{path: rootPath, limit: limit}, nil
