@@ -8,8 +8,6 @@ import (
 )
 
 func main() {
-	//path := ""
-	//store := saver.NewSaver(path, int64(100*1024*1024))
 	saver, err := saver.NewSaver("logs", int64(100*1024*1024))
 	if err != nil {
 		log.Fatalf("in postlogger.main.main failed to create saver: %v\n", err)

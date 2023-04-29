@@ -17,7 +17,6 @@ func TestStoreSuite(t *testing.T) {
 }
 
 func (s *saverSuite) TestNewSaver() {
-	//rootFolder := "..\\..\\..\\..\\logs"
 	rootFolder := "../../../../logs"
 	saver, err := NewSaver(rootFolder, int64(100))
 	logger.L.Infof("in saver.TestNewSaver saver %v, err %v\n", saver, err)

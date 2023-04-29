@@ -22,10 +22,8 @@ type Application interface {
 }
 
 func (a *ApplicationStruct) Handle(ts string, log string) {
-	//logger.L.Infof("in application.Handle ts: %q, log: %q\n", ts, log)
 	pre := log[:strings.Index(log, "in ")+len("in ")]
 	logString := fmt.Sprintf("[%s] %s%s", ts, pre, log[len(pre):])
-	//logger.L.Infof("in application.Handle logString: %q", logString)
 
 	err := a.S.Save(logString)
 	if err != nil {
