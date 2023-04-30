@@ -1,10 +1,15 @@
+// Assembly point
 package main
 
 import (
 	"log"
+	"os"
+	"os/signal"
 	"postLogger/internal/adapters/application"
 	"postLogger/internal/adapters/driven/saver"
 	"postLogger/internal/adapters/driver/rpc"
+	"postLogger/internal/logger"
+	"syscall"
 )
 
 func main() {
@@ -12,9 +17,20 @@ func main() {
 	if err != nil {
 		log.Fatalf("in postlogger.main.main failed to create saver: %v\n", err)
 	}
-	app := application.NewApp(saver)
+	app, done := application.NewApp(saver)
 	rcv := rpc.NewReceiver(app)
 
-	rcv.Run()
+	go rcv.Run()
+	go SignalListen(app)
+	<-done
+	logger.L.Errorln("postLogger is interrupted")
 
+}
+
+// SignalListen listens for Interrupt signal, when receiving one invokes stop function
+func SignalListen(app application.Application) {
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT)
+	<-sigChan
+	go app.Stop()
 }

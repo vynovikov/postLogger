@@ -102,7 +102,7 @@ func (s *SaverStruct) Save(l string) error {
 }
 
 func IsTS(s string) bool {
-	r := regexp.MustCompile(`^[0-2]\d.[0-2]\d.[0-2]\d\d\d [0-2]\d_\d\d_\d\d.\d{3,4}`)
+	r := regexp.MustCompile(`^[0-3]\d.[0-2]\d.[0-2]\d\d\d [0-2]\d_\d\d_\d\d.\d{3,4}`)
 	res := r.MatchString(s)
 	return res
 }
@@ -110,7 +110,6 @@ func IsTS(s string) bool {
 // GetFile looks for valid log file.
 // Creates one if not found.
 func GetFile(path string, limit int64) (*os.File, string, error) {
-
 	pathUpd, lastPartPath, sep := "", "", ""
 
 	switch {
@@ -121,7 +120,6 @@ func GetFile(path string, limit int64) (*os.File, string, error) {
 		sep = "\\"
 		lastPartPath = path[strings.LastIndex(path, "\\")+1:]
 	}
-
 	if strings.Contains(lastPartPath, ".txt") &&
 		IsTS(lastPartPath) {
 		fileStat, err := os.Stat(path)
